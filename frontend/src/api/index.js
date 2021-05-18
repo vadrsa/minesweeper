@@ -13,21 +13,19 @@ function saveToken(res) {
   return res;
 }
 
+
 function logoutIfNecessary(e){
   if (e.response.status === 403) {
     logoutUser();
     location.reload();
   }
 }
-function toData(res){
-  return res.data;
-}
 
 function loginUser(credentials) {
   return axios
     .post(apiUrl + '/auth/login', credentials)
     .then(saveToken)
-    .then(toData)
+    .then(res => res.data)
     .catch(e => {
       console.log(e);
     });
@@ -35,7 +33,7 @@ function loginUser(credentials) {
 
 function registerUser(credentials) {
   return axios.post(apiUrl + '/users/register', credentials)
-  .then(toData).catch(e => {
+  .then(res => res.data).catch(e => {
     console.log(e.response);
   });
 }
@@ -53,8 +51,12 @@ function isLoggedIn() {
 function getProfile() {
   return  cachios
     .get(apiUrl + '/users/profile', {ttl: 30})
-    .then(toData)
+    .then(res => res.data)
     .catch(logoutIfNecessary);
+}
+
+function getTopUsers(difficulty){
+  return axios.get(`${apiUrl}/users/top?difficulty=${difficulty}`).then(res => res.data);
 }
 
 export default {
@@ -62,5 +64,6 @@ export default {
   logoutUser,
   registerUser,
   isLoggedIn,
-  getProfile
+  getProfile,
+  getTopUsers
 };

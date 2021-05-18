@@ -15,7 +15,7 @@ class UserService {
         const sortObj = {};
         sortObj[sort] = asc === 'true' ? 'asc' : 'desc';
 
-        return User.find({}, { password: false })
+        return User.find({}, { password: false, currentGame: false })
             .skip(+offset)
             .limit(+limit)
             .sort(sortObj)

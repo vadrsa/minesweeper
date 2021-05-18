@@ -30,9 +30,9 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/app/customers',
+    href: '/app/leaderboard',
     icon: UsersIcon,
-    title: 'Customers'
+    title: 'Leaderboard'
   },
   {
     href: '/app/account',
