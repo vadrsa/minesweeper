@@ -23,6 +23,11 @@ app.use(jwtMiddleware.unless({
         '/auth/login',
         { url: '/users', methods: ['POST'] }
     ]
+}).unless({
+    path: [
+        '/users',
+        { url: '/users', methods: ['POST'] }
+    ]
 }));
 
 app.use('/users', users);

@@ -11,7 +11,6 @@ const schema = new Schema({
         unique: true,
         minLength: 4
     },
-
     password: {
         type: String,
         required: true,
@@ -21,25 +20,21 @@ const schema = new Schema({
         type: String,
         required: true,
     },
-
     lastName: {
         type: String,
         required: true,
     },
-    role: {
-        type: String, 
-        enum: [util.ADMIN, util.CUSTOMER],
-        default: util.DEFAULT_ROLE
-    },
-    attempts: {
+    easyTime: {
         type: Number,
-        required: true,
         default: 0
     },
-    isLockedOut: {
-        type: Boolean,
-        required: true,
-        default: false
+    mediumTime: {
+        type: Number,
+        default: 0
+    },
+    hardTime: {
+        type: Number,
+        default: 0
     }
 }, { collection: 'users' });
 
