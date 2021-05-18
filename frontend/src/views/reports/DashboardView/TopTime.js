@@ -9,10 +9,10 @@ import {
   Grid,
   Typography,
   colors,
-  makeStyles
+  makeStyles,
+  Box,
+  Button
 } from '@material-ui/core';
-// import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import MoneyIcon from '@material-ui/icons/Money';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +36,8 @@ const TopTime = ({
   className,
   difficulty,
   topTime,
+  icon,
+  onStartNewGame,
   ...rest
 }) => {
   const classes = useStyles();
@@ -65,29 +67,17 @@ const TopTime = ({
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
-              <MoneyIcon />
+              {icon}
             </Avatar>
           </Grid>
         </Grid>
-        {/* <Box
+        <Box
           mt={2}
           display="flex"
           alignItems="center"
         >
-          <ArrowDownwardIcon className={classes.differenceIcon} />
-          <Typography
-            className={classes.differenceValue}
-            variant="body2"
-          >
-            12%
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="caption"
-          >
-            Since last month
-          </Typography>
-        </Box> */}
+          <Button variant="outlined" color="primary" onClick={onStartNewGame}>Start a new game</Button>
+        </Box>
       </CardContent>
     </Card>
   );
@@ -96,7 +86,9 @@ const TopTime = ({
 TopTime.propTypes = {
   className: PropTypes.string,
   difficulty: PropTypes.string,
-  topTime: PropTypes.string
+  topTime: PropTypes.string,
+  icon: PropTypes.element,
+  onStartNewGame: PropTypes.func
 };
 
 export default TopTime;

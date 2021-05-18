@@ -36,6 +36,9 @@ const Results = ({ className, users, ...rest }) => {
             <TableHead>
               <TableRow>
                 <TableCell>
+                  Place
+                </TableCell>
+                <TableCell>
                   Username
                 </TableCell>
                 <TableCell>
@@ -59,6 +62,9 @@ const Results = ({ className, users, ...rest }) => {
                   hover
                   key={user.username}
                 >
+                  <TableCell>
+                    {user.place}
+                  </TableCell>
                   <TableCell>
                     <Box
                       alignItems="center"

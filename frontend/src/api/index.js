@@ -72,9 +72,7 @@ function gameStart(difficulty) {
 function gameClick(row, col) {
   return axios
     .patch(apiUrl + '/game/click', { row, col })
-    .then(res => {
-      console.log(res);
-    })
+    .then(res => res.data)
     .catch(e => {
       console.log(e.response);
     });
@@ -86,6 +84,10 @@ function getTopUsers(difficulty) {
     .then(res => res.data);
 }
 
+function getGameState(){
+  return axios.get(`${apiUrl}/game`).then(res => res.data);
+}
+
 export default {
   loginUser,
   logoutUser,
@@ -94,5 +96,6 @@ export default {
   getProfile,
   getTopUsers,
   gameStart,
-  gameClick
+  gameClick,
+  getGameState
 };
