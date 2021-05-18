@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Board = ({ state, onCellClick, ...rest }) => {
+const Board = ({ state, onCellClick, onContextMenu, ...rest }) => {
     
     const classes = useStyles();
     return (<div className={classes.root}>
@@ -25,6 +25,7 @@ const Board = ({ state, onCellClick, ...rest }) => {
                     <div key={i * row.length + j}>
                         <Cell
                             onClick={() => onCellClick(i, j)}
+							onContextMenu={(e) => onContextMenu(e, i, j)}
                             value={item}
                         />
                         {(j === row.length - 1) ? <div className={classes.clear} /> : ""}
