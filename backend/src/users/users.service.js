@@ -1,4 +1,5 @@
 const { NotFound } = require("http-errors");
+const util = require("../commons/util");
 const User = require("./user.entity");
 
 function rand(num) {
@@ -35,11 +36,11 @@ class UserService {
   createBoard(difficulty) {
     let n, m, bombs;
 
-    if (difficulty === "easy") {
+    if (difficulty === util.MODES.easy) {
       n = 9;
       m = 9;
       bombs = 10;
-    } else if(difficulty === 'medium') {
+    } else if(difficulty === util.MODES.medium) {
       n = 16;
       m = 16;
       bombs = 40;

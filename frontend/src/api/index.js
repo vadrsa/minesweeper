@@ -76,6 +76,6 @@ export default {
   registerUser,
   isLoggedIn,
   getProfile,
-  getTopUsers
+  getTopUsers,
   gameStart
 };
