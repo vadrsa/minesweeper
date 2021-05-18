@@ -10,24 +10,8 @@ class AuthService {
         if (!user) {
             throw new Unauthorized();
         }
-        else if(user.isLockedOut){
-            throw new Locked("The user is locked!");
-        }
         else if(!bcrypt.compareSync(password, user.password)){
-            user.attempts = user.attempts + 1;
-            if(user.attempts == (process.env.MAX_FAILED_LOGIN_ATTEMPTS || 3)){
-                user.isLockedOut = true;
-                user.save();
-                throw new Locked("The user is locked!");
-            }
-            else{
-                user.save();
-                throw new Unauthorized();
-            }
-        }
-        if(user.attempts > 0){
-            user.attempts = 0;
-            user.save();
+            throw new Unauthorized();
         }
         return user;
     }

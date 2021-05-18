@@ -21,6 +21,7 @@ import {
   Users as UsersIcon
 } from 'react-feather';
 import NavItem from './NavItem';
+import api from '../../../api'
 
 const items = [
   {
@@ -62,7 +63,9 @@ const NavBar = ({ onMobileClose, openMobile }) => {
   const [user, setUser] = useState([]);
 
   async function fetchUsersFromServer() {
-    setUser({ name: 'Davit Asryan', username: 'vadrsa' });
+	api.getProfile().then((res) => {
+		setUser({ name: res.data.firstName + ' ' + res.data.lastName, username: res.data.username });
+	})
   }
 
   useEffect(() => {

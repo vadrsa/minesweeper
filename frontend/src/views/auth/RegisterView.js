@@ -66,12 +66,7 @@ const RegisterView = () => {
             onSubmit={(values) => {
               values.username = values.email? values.email: values.username;
               return api.registerUser(values).then(data => {
-                if(!data.isError){
                   navigate('/login', { replace: true });
-                }
-                else{
-                  console.log(data);
-                }
               })
               
             }}

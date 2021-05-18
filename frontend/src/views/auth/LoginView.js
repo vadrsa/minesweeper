@@ -15,7 +15,7 @@ import {
 import Page from 'src/components/Page';
 import api from '../../api';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     height: '100%',
@@ -29,10 +29,7 @@ const LoginView = () => {
   const navigate = useNavigate();
 
   return (
-    <Page
-      className={classes.root}
-      title="Login"
-    >
+    <Page className={classes.root} title="Login">
       <Box
         display="flex"
         flexDirection="column"
@@ -46,18 +43,17 @@ const LoginView = () => {
               password: ''
             }}
             validationSchema={Yup.object().shape({
-              username: Yup.string().max(255).required('Username or Email is required'),
-              password: Yup.string().max(255).required('Password is required')
+              username: Yup.string()
+                .max(255)
+                .required('Username or Email is required'),
+              password: Yup.string()
+                .max(255)
+                .required('Password is required')
             })}
-            onSubmit={(values) => {
+            onSubmit={values => {
               return api.loginUser(values).then(data => {
-                if(!data.isError){
-                  navigate('/app/dashboard', { replace: true });
-                }
-                else{
-                  console.log(data);
-                }
-              })
+                navigate('/app/dashboard', { replace: true });
+              });
             }}
           >
             {({
@@ -71,10 +67,7 @@ const LoginView = () => {
             }) => (
               <form onSubmit={handleSubmit}>
                 <Box mb={3}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
+                  <Typography color="textPrimary" variant="h2">
                     Sign in
                   </Typography>
                 </Box>
@@ -116,17 +109,9 @@ const LoginView = () => {
                     Sign in now
                   </Button>
                 </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Don&apos;t have an account?
-                  {' '}
-                  <Link
-                    component={RouterLink}
-                    to="/register"
-                    variant="h6"
-                  >
+                <Typography color="textSecondary" variant="body1">
+                  Don&apos;t have an account?{' '}
+                  <Link component={RouterLink} to="/register" variant="h6">
                     Sign up
                   </Link>
                 </Typography>
