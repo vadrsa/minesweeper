@@ -17,12 +17,12 @@ class UserService {
     const sortObj = {};
     sortObj[sort] = asc === "true" ? "asc" : "desc";
 
-    return User.find({}, { password: false })
-      .skip(+offset)
-      .limit(+limit)
-      .sort(sortObj)
-      .exec();
-  }
+        return User.find({}, { password: false, currentGame: false })
+            .skip(+offset)
+            .limit(+limit)
+            .sort(sortObj)
+            .exec();
+    }
 
   async findOne(id) {
     const user = await User.findById(id).exec();
