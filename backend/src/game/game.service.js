@@ -76,9 +76,20 @@ class GameService {
     return user.save();
   }
 
+  getGame(user) {
+    const gameData = JSON.parse(JSON.stringify(user.currentGame[0]));
+
+    delete gameData.gameArr;
+
+    return gameData;
+  }
+
   click(row, col, user) {
     const gameBoard = user.currentGame[0].gameArr;
     const userBoard = user.currentGame[0].userArr;
+
+    if(user.currentGame[0].isLost) return {userArr: userBoard};
+    
     let newUserBoard = JSON.parse(JSON.stringify(userBoard));
     let isLost = false;
 
@@ -92,17 +103,38 @@ class GameService {
       user.currentGame[0].isLost = true;
       newUserBoard = revealBombs(newUserBoard, gameBoard, n, m);
       isLost = true;
+      user.currentGame[0].endDate = Date.now();
     }
     if(num == 0) {
       newUserBoard = checkSurroundings(row, col, newUserBoard, gameBoard, n, m)
     }
 
     let isWon;
-    if(!isLost) isWon = checkVictory(newUserBoard, gameBoard, n, m);
+    if(!isLost) {
+      isWon = checkVictory(newUserBoard, gameBoard, n, m);
+    }
 
     user.currentGame[0].userArr = newUserBoard;
     if(isWon) user.currentGame[0].endDate = Date.now();
 
+    user.save();
+
+    const result = JSON.parse(JSON.stringify(user.currentGame[0]));
+    delete result.gameArr;
+
+    return result;
+  }
+
+  flag(row, col, user) {
+    const gameBoard = user.currentGame[0].gameArr;
+    const userBoard = user.currentGame[0].userArr;
+
+    let newUserBoard = JSON.parse(JSON.stringify(userBoard));
+
+    if(newUserBoard[row][col] === -3) newUserBoard[row][col] = -2;
+    else if(newUserBoard[row][col] === -2) newUserBoard[row][col] = -3;
+
+    user.currentGame[0].userArr = newUserBoard;
     user.save();
 
     return newUserBoard;
