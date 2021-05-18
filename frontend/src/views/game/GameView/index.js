@@ -27,13 +27,20 @@ const Game = () => {
         }).catch(e => console.log(e));
     }, [])
 
+    function handleCellClick(i, j){
+        api.gameClick(i, j).then(data =>{
+            console.log(data);
+            setState(data);
+        });
+    }
+
     return (
         <Page
             className={classes.root}
             title="Game"
         >
             <Container maxWidth="lg">
-                <Board state={state} />
+                <Board state={state} onCellClick={handleCellClick} />
             </Container>
         </Page>
     );

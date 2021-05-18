@@ -20,7 +20,7 @@ router.post('/newGame', asyncHandler(async (req, res) => {
 router.patch('/click', asyncHandler(async (req, res) => {
 	const user = await users.findOne(req.user.userId);
 	const newBoard = game.click(req.body.row, req.body.col, user);
-	res.send();
+	res.json(newBoard);
 }))
 
 router.get('/', asyncHandler(async (req, res) => {

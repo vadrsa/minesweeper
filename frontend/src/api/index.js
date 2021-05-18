@@ -72,9 +72,7 @@ function gameStart(difficulty) {
 function gameClick(row, col) {
   return axios
     .patch(apiUrl + '/game/click', { row, col })
-    .then(res => {
-      console.log(res);
-    })
+    .then(res => res.data)
     .catch(e => {
       console.log(e.response);
     });
