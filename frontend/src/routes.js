@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
 import AccountView from 'src/views/account/AccountView';
+import GameView from 'src/views/game/GameView';
 import LeaderboardView from 'src/views/leaderboard/LeaderboardView';
 import DashboardView from 'src/views/reports/DashboardView';
 import LoginView from 'src/views/auth/LoginView';
@@ -14,7 +15,7 @@ const loggedInRoutes = [
     path: 'app',
     element: <DashboardLayout />,
     children: [
-      { path: 'account', element: <AccountView /> },
+      { path: 'game', element: <GameView /> },
       { path: 'leaderboard', element: <LeaderboardView /> },
       { path: 'dashboard', element: <DashboardView /> },
       { path: '*', element: <Navigate to="/404" /> }

@@ -7,7 +7,10 @@ import {
 import Page from 'src/components/Page';
 import TopTime from './TopTime';
 import api from 'src/api';
-
+import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded';
+import StarHalfRoundedIcon from '@material-ui/icons/StarHalfRounded';
+import StarRoundedIcon from '@material-ui/icons/StarRounded';
+import { useNavigate } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -19,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-  
+  const navigate = useNavigate();
   const [easyTime, setEasyTime] = useState(0);
   const [mediumTime, setMediumTime] = useState(0);
   const [hardTime, setHardTime] = useState(0);
@@ -30,6 +33,12 @@ const Dashboard = () => {
       setHardTime(data.hardTime);
     })
   })
+
+  function handleStartNewGame(difficulty){
+    api.gameStart(difficulty).then(res => {
+      navigate("/app/game");
+    });
+  }
 
   return (
     <Page
@@ -46,21 +55,21 @@ const Dashboard = () => {
             lg={4}
             xs={12}
           >
-            <TopTime difficulty="Easy" topTime={easyTime + " seconds"}/>
+            <TopTime difficulty="Easy" topTime={easyTime + " seconds"} icon={<StarBorderRoundedIcon/>} onStartNewGame={() => handleStartNewGame("E")} />
           </Grid>
           <Grid
             item
             lg={4}
             xs={12}
           >
-            <TopTime difficulty="Medium" topTime={mediumTime + " seconds"}/>
+            <TopTime difficulty="Medium" topTime={mediumTime + " seconds"} icon={<StarHalfRoundedIcon/>} onStartNewGame={() => handleStartNewGame("M")} />
           </Grid>
           <Grid
             item
             lg={4}
             xs={12}
           >
-            <TopTime difficulty="Hard" topTime={hardTime + " seconds"}/>
+            <TopTime difficulty="Hard" topTime={hardTime + " seconds"} icon={<StarRoundedIcon/>} onStartNewGame={() => handleStartNewGame("H")} />
           </Grid>
         </Grid>
       </Container>

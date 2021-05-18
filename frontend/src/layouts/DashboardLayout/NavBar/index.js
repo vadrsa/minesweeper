@@ -11,6 +11,7 @@ import {
   makeStyles,
   Button
 } from '@material-ui/core';
+import VideogameAssetOutlinedIcon from '@material-ui/icons/VideogameAssetOutlined';
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
@@ -36,9 +37,9 @@ const items = [
     title: 'Leaderboard'
   },
   {
-    href: '/app/account',
-    icon: UserIcon,
-    title: 'Account'
+    href: '/app/game',
+    icon: VideogameAssetOutlinedIcon,
+    title: 'Game'
   }
 ];
 
@@ -81,18 +82,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
       onMobileClose();
     }
   }, [location.pathname]);
-
-  function easyBtn() {
-    api.gameStart('easy');
-  }
-
-  function mediumBtn() {
-    api.gameStart('medium');
-  }
-
-  function hardBtn() {
-    api.gameStart('hard');
-  }
 
   const content = (
     <Box height="100%" display="flex" flexDirection="column">
@@ -142,9 +131,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           variant="persistent"
         >
           {content}
-          <Button onClick={easyBtn}>Easy</Button>
-          <Button onClick={mediumBtn}>Medium</Button>
-          <Button onClick={hardBtn}>Hard</Button>
         </Drawer>
       </Hidden>
     </>

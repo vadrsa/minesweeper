@@ -47,4 +47,9 @@ router.post('/newGame', asyncHandler(async (req, res) => {
 	res.status(201).send();
 }))
 
+router.get('/game', asyncHandler(async (req, res) => {
+	const user = await users.findOne(req.user.userId);
+	res.status(201).send(user.currentGame);
+}))
+
 module.exports = router;

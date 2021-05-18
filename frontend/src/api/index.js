@@ -70,6 +70,10 @@ function getTopUsers(difficulty){
   return axios.get(`${apiUrl}/users/top?difficulty=${difficulty}`).then(res => res.data);
 }
 
+function getGameState(){
+  return axios.get(`${apiUrl}/users/game`).then(res => res.data);
+}
+
 export default {
   loginUser,
   logoutUser,
@@ -77,5 +81,6 @@ export default {
   isLoggedIn,
   getProfile,
   getTopUsers,
-  gameStart
+  gameStart,
+  getGameState
 };
