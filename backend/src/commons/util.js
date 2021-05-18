@@ -1,5 +1,11 @@
 const fs = require('fs');
 
+const MODES = {
+    easy: "E",
+    medium: "M",
+    hard: "H",
+};
+
 const ADMIN = 'admin';
 const CUSTOMER = 'customer';
 const DEFAULT_ROLE = CUSTOMER;
@@ -8,6 +14,7 @@ module.exports = {
     ADMIN,
     CUSTOMER,
     DEFAULT_ROLE,
+    MODES,
     writeInFile(content) {
         return new Promise((resolve) => {
             fs.writeFile('content.txt', content, {encoding: 'utf-8'}, () => {
