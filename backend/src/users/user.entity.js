@@ -36,6 +36,26 @@ const schema = new Schema(
       type: Number,
       default: 0,
     },
+    currentGame: [{
+      gameArr: {
+        type: Array
+      },
+      userArr: {
+        type: Array
+      },
+      startDate:{
+        type: Date,
+        default: Date.now
+      },
+      endDate: {
+        type: Date,
+        default: 0
+      },
+      isLost:{
+        type: Boolean,
+        default: false
+      }
+    }]
   },
   { collection: "users" }
 );
