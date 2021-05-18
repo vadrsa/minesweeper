@@ -83,15 +83,19 @@ const NavBar = ({ onMobileClose, openMobile }) => {
   }, [location.pathname]);
 
   function easyBtn() {
-    api.gameStart('easy');
+    api.gameStart('E');
   }
 
   function mediumBtn() {
-    api.gameStart('medium');
+    api.gameStart('M');
   }
 
   function hardBtn() {
-    api.gameStart('hard');
+    api.gameStart('H');
+  }
+
+  function clickBtn() {
+	  api.gameClick(0, 2)
   }
 
   const content = (
@@ -145,6 +149,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           <Button onClick={easyBtn}>Easy</Button>
           <Button onClick={mediumBtn}>Medium</Button>
           <Button onClick={hardBtn}>Hard</Button>
+          <Button onClick={clickBtn}>CLICK</Button>
         </Drawer>
       </Hidden>
     </>
