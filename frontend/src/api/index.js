@@ -13,13 +13,13 @@ function saveToken(res) {
   return res;
 }
 
-function logoutIfNecessary(e){
+function logoutIfNecessary(e) {
   if (e.response.status === 403) {
     logoutUser();
     location.reload();
   }
 }
-function toData(res){
+function toData(res) {
   return res.data;
 }
 
@@ -34,16 +34,18 @@ function loginUser(credentials) {
 }
 
 function registerUser(credentials) {
-  return axios.post(apiUrl + '/users/register', credentials)
-  .then(toData).catch(e => {
-    console.log(e.response);
-  });
+  return axios
+    .post(apiUrl + '/users/register', credentials)
+    .then(toData)
+    .catch(e => {
+      console.log(e.response);
+    });
 }
 
 function logoutUser() {
   const cookies = new Cookies();
   cookies.remove('token', { path: '/' });
-  console.log("123");
+  console.log('123');
 }
 
 function isLoggedIn() {
@@ -51,10 +53,21 @@ function isLoggedIn() {
 }
 
 function getProfile() {
-  return  cachios
-    .get(apiUrl + '/users/profile', {ttl: 30})
+  return cachios
+    .get(apiUrl + '/users/profile', { ttl: 30 })
     .then(toData)
     .catch(logoutIfNecessary);
+}
+
+function gameStart(difficulty) {
+  return axios
+    .post(apiUrl + '/users/newGame', { difficulty })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(e => {
+      console.log(e.response);
+    });
 }
 
 export default {
@@ -62,5 +75,6 @@ export default {
   logoutUser,
   registerUser,
   isLoggedIn,
-  getProfile
+  getProfile,
+  gameStart
 };
