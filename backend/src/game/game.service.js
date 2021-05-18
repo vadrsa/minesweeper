@@ -85,14 +85,6 @@ class GameService {
     let n = gameBoard.length;
     let m = gameBoard[0].length;
 
-    for(let i = 0; i < n; i++) {
-      let str = '';
-      for(let j = 0; j < m; j++) {
-        str += userBoard[i][j] + '  ';
-      }
-      console.log(str);
-    }
-
     const num = gameBoard[row][col];
     newUserBoard[row][col] = num;
 
@@ -104,25 +96,16 @@ class GameService {
     if(num == 0) {
       newUserBoard = checkSurroundings(row, col, newUserBoard, gameBoard, n, m)
     }
-    
-    console.log();
-    console.log();
-
-    for(let i = 0; i < n; i++) {
-      let str = '';
-      for(let j = 0; j < m; j++) {
-        str += newUserBoard[i][j] + '  ';
-      }
-      console.log(str);
-    }
 
     let isWon;
     if(!isLost) isWon = checkVictory(newUserBoard, gameBoard, n, m);
 
     user.currentGame[0].userArr = newUserBoard;
-    if(isWon) user.currentGame[0].endDate = Date.now;
+    if(isWon) user.currentGame[0].endDate = Date.now();
 
-    return user.save();
+    user.save();
+
+    return newUserBoard;
   }
 }
 
@@ -151,8 +134,8 @@ function checkSurroundings(row, col, userBoard, gameBoard, n, m) {
 }
 
 function checkVictory(userBoard, gameBoard, n, m) {
-  for(let i = row - 1; i <= row + 1; i++) {
-    for(let j = col - 1; j <= col + 1; j++) {
+  for(let i = 0; i < n; i++) {
+    for(let j = 0; j < m; j++) {
       if(userBoard[i][j] !== gameBoard[i][j]) {
         if(gameBoard[i][j] !== -1) return false;
       }

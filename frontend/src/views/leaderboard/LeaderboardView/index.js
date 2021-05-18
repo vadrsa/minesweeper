@@ -37,6 +37,7 @@ const LeaderboardView = () => {
         if(user){
           user.highlight = true;
         }
+        users.forEach((x, i) => x.place = i+1);
         return users;
       }).then(setUsers).finally(() => setLoading(false));
     });
