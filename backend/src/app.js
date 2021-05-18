@@ -5,6 +5,7 @@ require('./db-connection');
 const express = require('express');
 const app = express();
 const users = require('./users/users.controller');
+const game = require('./game/game.controller');
 const auth = require('./auth/auth.controller');
 const admin = require('./admin/admin.controller');
 const { handleError } = require('./commons/middlewares/error-handler.middleware');
@@ -23,6 +24,7 @@ app.use(jwtMiddleware.unless({
 }));
 
 app.use('/users', users);
+app.use('/game', game);
 app.use('/auth', auth);
 app.use('/admin', admin);
 app.use(handleError);
