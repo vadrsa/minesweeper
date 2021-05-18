@@ -41,7 +41,7 @@ function registerUser(credentials) {
 function logoutUser() {
   const cookies = new Cookies();
   cookies.remove('token', { path: '/' });
-  console.log("123");
+  console.log('123');
 }
 
 function isLoggedIn() {
@@ -55,6 +55,17 @@ function getProfile() {
     .catch(logoutIfNecessary);
 }
 
+function gameStart(difficulty) {
+  return axios
+    .post(apiUrl + '/users/newGame', { difficulty })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(e => {
+      console.log(e.response);
+    });
+}
+
 function getTopUsers(difficulty){
   return axios.get(`${apiUrl}/users/top?difficulty=${difficulty}`).then(res => res.data);
 }
@@ -66,4 +77,5 @@ export default {
   isLoggedIn,
   getProfile,
   getTopUsers
+  gameStart
 };

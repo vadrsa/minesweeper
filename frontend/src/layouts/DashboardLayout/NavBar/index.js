@@ -8,7 +8,8 @@ import {
   Hidden,
   List,
   Typography,
-  makeStyles
+  makeStyles,
+  Button
 } from '@material-ui/core';
 import {
   AlertCircle as AlertCircleIcon,
@@ -21,7 +22,7 @@ import {
   Users as UsersIcon
 } from 'react-feather';
 import NavItem from './NavItem';
-import api from '../../../api'
+import api from '../../../api';
 
 const items = [
   {
@@ -63,9 +64,12 @@ const NavBar = ({ onMobileClose, openMobile }) => {
   const [user, setUser] = useState({});
 
   async function fetchUserFromServer() {
-    api.getProfile().then((data) => {
-      setUser({ name: data.firstName + ' ' + data.lastName, username: data.username });
-    })
+    api.getProfile().then(data => {
+      setUser({
+        name: data.firstName + ' ' + data.lastName,
+        username: data.username
+      });
+    });
   }
 
   useEffect(() => {
@@ -78,36 +82,32 @@ const NavBar = ({ onMobileClose, openMobile }) => {
     }
   }, [location.pathname]);
 
+  function easyBtn() {
+    api.gameStart('easy');
+  }
+
+  function mediumBtn() {
+    api.gameStart('medium');
+  }
+
+  function hardBtn() {
+    api.gameStart('hard');
+  }
+
   const content = (
-    <Box
-      height="100%"
-      display="flex"
-      flexDirection="column"
-    >
-      <Box
-        alignItems="center"
-        display="flex"
-        flexDirection="column"
-        p={2}
-      >
-        <Typography
-          className={classes.name}
-          color="textPrimary"
-          variant="h5"
-        >
+    <Box height="100%" display="flex" flexDirection="column">
+      <Box alignItems="center" display="flex" flexDirection="column" p={2}>
+        <Typography className={classes.name} color="textPrimary" variant="h5">
           {user.username}
         </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
+        <Typography color="textSecondary" variant="body2">
           {user.name}
         </Typography>
       </Box>
       <Divider />
       <Box p={2}>
         <List>
-          {items.map((item) => (
+          {items.map(item => (
             <NavItem
               href={item.href}
               key={item.title}
@@ -142,6 +142,9 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           variant="persistent"
         >
           {content}
+          <Button onClick={easyBtn}>Easy</Button>
+          <Button onClick={mediumBtn}>Medium</Button>
+          <Button onClick={hardBtn}>Hard</Button>
         </Drawer>
       </Hidden>
     </>
