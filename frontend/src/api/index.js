@@ -1,56 +1,60 @@
 import axios from 'axios';
+import cachios from 'cachios';
 import Cookies from 'universal-cookie';
 const apiUrl = 'http://localhost:3030';
 const cookies = new Cookies();
 console.log(apiUrl);
 
 function saveToken(res) {
-  cookies.set('token', res.data.token);
+  cookies.set('token', res.data.token, { path: '/' });
 
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token;
 
   return res;
 }
 
-async function loginUser(credentials) {
+function logoutIfNecessary(e){
+  if (e.response.status === 403) {
+    logoutUser();
+    location.reload();
+  }
+}
+function toData(res){
+  return res.data;
+}
+
+function loginUser(credentials) {
   return axios
     .post(apiUrl + '/auth/login', credentials)
     .then(saveToken)
+    .then(toData)
     .catch(e => {
       console.log(e);
     });
 }
 
-async function registerUser(credentials) {
-  return axios.post(apiUrl + '/users/register', credentials).catch(e => {
+function registerUser(credentials) {
+  return axios.post(apiUrl + '/users/register', credentials)
+  .then(toData).catch(e => {
     console.log(e.response);
   });
 }
 
 function logoutUser() {
-  cookies.remove('token');
+  const cookies = new Cookies();
+  cookies.remove('token', { path: '/' });
+  console.log("123");
 }
 
 function isLoggedIn() {
-  return cookies.get('token');
+  return cookies.get('token', { path: '/' });
 }
 
 function getProfile() {
-  return axios
-    .get(apiUrl + '/users/profile')
-    .then(res => {
-      console.log(res);
-      console.log(123123);
-      return res;
-    })
-    .catch(e => {
-      console.log(e.response);
-      console.log(e.response.status);
-      if (e.response.status === 403) {
-        console.log(123123);
-        logoutUser();
-      }
-    });
+  return  cachios
+    .get(apiUrl + '/users/profile', {ttl: 30})
+    .then(toData)
+    .catch(logoutIfNecessary);
 }
 
 export default {

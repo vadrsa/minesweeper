@@ -44,7 +44,9 @@ const routes = [
   }
 ];
 
-export default {
-  routes,
-  loggedInRoutes
-};
+export default function(isLoggedIn){
+  if(isLoggedIn){
+    return loggedInRoutes;
+  }
+  return routes;
+}

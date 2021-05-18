@@ -60,16 +60,16 @@ const useStyles = makeStyles(() => ({
 const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
   const location = useLocation();
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
-  async function fetchUsersFromServer() {
-	api.getProfile().then((res) => {
-		setUser({ name: res.data.firstName + ' ' + res.data.lastName, username: res.data.username });
-	})
+  async function fetchUserFromServer() {
+    api.getProfile().then((data) => {
+      setUser({ name: data.firstName + ' ' + data.lastName, username: data.username });
+    })
   }
 
   useEffect(() => {
-    fetchUsersFromServer();
+    fetchUserFromServer();
   }, []);
 
   useEffect(() => {
