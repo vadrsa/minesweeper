@@ -13,8 +13,7 @@ function saveToken(res) {
   return res;
 }
 
-
-function logoutIfNecessary(e){
+function logoutIfNecessary(e) {
   if (e.response.status === 403) {
     logoutUser();
     location.reload();
@@ -32,10 +31,12 @@ function loginUser(credentials) {
 }
 
 function registerUser(credentials) {
-  return axios.post(apiUrl + '/users/register', credentials)
-  .then(res => res.data).catch(e => {
-    console.log(e.response);
-  });
+  return axios
+    .post(apiUrl + '/users/register', credentials)
+    .then(res => res.data)
+    .catch(e => {
+      console.log(e.response);
+    });
 }
 
 function logoutUser() {
@@ -49,15 +50,17 @@ function isLoggedIn() {
 }
 
 function getProfile() {
-  return  cachios
-    .get(apiUrl + '/users/profile', {ttl: 30})
+  return cachios
+    .get(apiUrl + '/users/profile', { ttl: 30 })
     .then(res => res.data)
-    .catch(logoutIfNecessary);
+    .catch(e => {
+      logoutIfNecessary(e);
+    });
 }
 
 function gameStart(difficulty) {
   return axios
-    .post(apiUrl + '/users/newGame', { difficulty })
+    .post(apiUrl + '/game/newGame', { difficulty })
     .then(res => {
       console.log(res);
     })
@@ -66,12 +69,25 @@ function gameStart(difficulty) {
     });
 }
 
-function getTopUsers(difficulty){
-  return axios.get(`${apiUrl}/users/top?difficulty=${difficulty}`).then(res => res.data);
+function gameClick(row, col) {
+  return axios
+    .patch(apiUrl + '/game/click', { row, col })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(e => {
+      console.log(e.response);
+    });
+}
+
+function getTopUsers(difficulty) {
+  return axios
+    .get(`${apiUrl}/users/top?difficulty=${difficulty}`)
+    .then(res => res.data);
 }
 
 function getGameState(){
-  return axios.get(`${apiUrl}/users/game`).then(res => res.data);
+  return axios.get(`${apiUrl}/game`).then(res => res.data);
 }
 
 export default {
@@ -82,5 +98,6 @@ export default {
   getProfile,
   getTopUsers,
   gameStart,
+  gameClick,
   getGameState
 };
