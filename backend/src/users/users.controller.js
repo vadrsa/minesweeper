@@ -19,4 +19,11 @@ router.get('/profile', asyncHandler(async (req, res) => {
 	res.send(user);
 }))
 
+router.post('/newGame', asyncHandler(async (req, res) => {
+	const boards = users.createBoard(req.body.difficulty);
+	const user = await users.findOne(req.user.userId);
+	users.saveGame(boards, user);
+	res.status(201).send();
+}))
+
 module.exports = router;
