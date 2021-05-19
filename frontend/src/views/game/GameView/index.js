@@ -17,13 +17,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function getNumFlags(state){
+    let count = 0;
+    for(let i = 0; i < state.length; i++){
+        for(let j = 0; j < state[i].length; j++){
+            if(state[i][j] === -3){
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
 const Game = () => {
     const classes = useStyles();
     const [state, setState] = useState([]);
     const [startDate, setStartDate] = useState(Date.now());
     const [endDate, setEndDate] = useState(0);
     const isFinished = endDate > startDate;
-
+    const numFlags = getNumFlags(state);
     useEffect(() => {
         api.getGameState().then(data => {
             setState(data.userArr);
@@ -52,6 +64,7 @@ const Game = () => {
 
   return (
       <Page className={classes.root} title="Game">
+          {numFlags}
           <Stopwatch start={startDate} end={endDate} />
           <Board
             state={state}

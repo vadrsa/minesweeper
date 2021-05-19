@@ -8,17 +8,17 @@ class UserService {
     return user.save();
   }
 
-  findAll(query) {
+  findAll(query, modifyQuery) {
     const { offset, limit, sort, asc } = query;
 
     const sortObj = {};
     sortObj[sort] = asc === "true" ? "asc" : "desc";
-
-        return User.find({}, { password: false, currentGame: false })
-            .skip(+offset)
-            .limit(+limit)
-            .sort(sortObj)
-            .exec();
+    modifyQuery = modifyQuery? modifyQuery: q => q;
+    return modifyQuery(User.find({}, { password: false, currentGame: false }))
+        .skip(+offset)
+        .limit(+limit)
+        .sort(sortObj)
+        .exec();
     }
 
   async findOne(id) {
