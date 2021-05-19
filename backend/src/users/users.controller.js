@@ -36,7 +36,7 @@ router.get('/top', asyncHandler(async (req, res) => {
     if(!sort){
         throw new BadRequest(`difficulty must be one of ${Object.values(util.MODES)}`);
     }
-	const result = await users.findAll({limit: 10, sort, asc: 'true'});
+	const result = await users.findAll({limit: 10, sort, asc: 'true'}, q => q.where(sort).gt(0));
 	res.send(result);
 }))
 
