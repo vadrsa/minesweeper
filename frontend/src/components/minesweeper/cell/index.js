@@ -44,6 +44,9 @@ const Cell = ({ value, onClick, onContextMenu, ...rest }) => {
         if (value === -1) {
             return "💣";
         }
+        if(value === 0){
+            return "";
+        }
         return value;
     }
     let className =

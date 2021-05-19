@@ -27,6 +27,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getNumFlags(state) {
+    if(!state){
+        return 0;
+    }
     let count = 0;
     for (let i = 0; i < state.length; i++) {
         for (let j = 0; j < state[i].length; j++) {
@@ -64,7 +67,7 @@ const Game = () => {
 
     useEffect(() => {
         api.getGameState().then(data => {
-            if (!data) {
+            if (!data || !data.userArr) {
                 setNotFound(true);
             }
             else {
@@ -72,7 +75,7 @@ const Game = () => {
                 setState(data.userArr);
                 setStartDate(Date.parse(data.startDate));
                 setEndDate(Date.parse(data.endDate));
-                setDifficulty("E");
+                setDifficulty(data.difficulty);
                 setLost(data.isLost);
             }
         }).catch(e => console.log(e.response));
@@ -99,11 +102,11 @@ const Game = () => {
     }
 
     function restart() {
-        api.gameStart(difficulty).then(res => location.reload());
+        api.gameStart(difficulty).then(() => location.reload());
     }
 
     function quit() {
-        navigate("/app/dashboard");
+        api.quitGame().then(() => navigate("/app/dashboard"));
     }
 
     return (
@@ -116,7 +119,7 @@ const Game = () => {
 
                         <Grid item>
                             <Stopwatch start={startDate} end={endDate} />
-                            <Typography style={{ textAlign: 'center' }}>Number of bombs: {numFlags}</Typography>
+                            <Typography style={{ textAlign: 'center' }}>Bombs Remaining: {numFlags}</Typography>
                         </Grid>
                         <Grid item >
                             <Grid container alignItems="center" justify="center" spacing={2}>
