@@ -124,6 +124,10 @@ class GameService {
       const gameTime = Math.floor((user.currentGame[0].endDate - user.currentGame[0].startDate) / 1000);
       if(user.currentGame[0].difficulty === util.MODES.easy) {
         if(gameTime < user.easyTime || user.easyTime === 0) user.easyTime = gameTime;
+      } else if(user.currentGame[0].difficulty === util.MODES.medium) {
+        if(gameTime < user.mediumTime || user.mediumTime === 0) user.mediumTime = gameTime;
+      } else {
+        if(gameTime < user.hardTime || user.hardTime === 0) user.hardTime = gameTime;
       }
     }
 
