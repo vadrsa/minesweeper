@@ -78,7 +78,7 @@ class GameService {
   }
 
   getGame(user) {
-    if(typeof user.currentGame[0] === 'undefined') return {userArr: []};
+    if(typeof user.currentGame[0] === 'undefined') return {};
     const gameData = JSON.parse(JSON.stringify(user.currentGame[0]));
 
     delete gameData.gameArr;

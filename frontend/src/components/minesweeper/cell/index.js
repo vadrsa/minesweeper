@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     isFlag: {
+        background: "#333333",
         color: "#fc543c"
     },
     isMine: {
@@ -42,6 +43,9 @@ const Cell = ({ value, onClick, onContextMenu, ...rest }) => {
         }
         if (value === -1) {
             return "💣";
+        }
+        if(value === 0){
+            return "";
         }
         return value;
     }
