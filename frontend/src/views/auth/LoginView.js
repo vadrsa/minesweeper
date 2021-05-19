@@ -27,6 +27,7 @@ const useStyles = makeStyles(theme => ({
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [error, setError] = React.useState('');
 
   return (
     <Page className={classes.root} title="Login">
@@ -39,7 +40,7 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: '',
+              username: '',
               password: ''
             }}
             validationSchema={Yup.object().shape({
@@ -53,7 +54,11 @@ const LoginView = () => {
             onSubmit={values => {
               return api.loginUser(values).then(data => {
                 navigate('/app/dashboard', { replace: true });
-              });
+              }).catch(e => {
+				if(e.response.status === 401) {
+					setError('Incorrect username or password!');
+				}
+			  });;
             }}
           >
             {({
@@ -72,9 +77,9 @@ const LoginView = () => {
                   </Typography>
                 </Box>
                 <TextField
-                  error={Boolean(touched.username && errors.username)}
+                  error={Boolean(touched.username && errors.username || error)}
                   fullWidth
-                  helperText={touched.username && errors.username}
+                  helperText={touched.username && errors.username || error}
                   label="Username or Email"
                   margin="normal"
                   name="username"
