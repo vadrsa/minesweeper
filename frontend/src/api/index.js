@@ -24,18 +24,12 @@ function loginUser(credentials) {
     .post(apiUrl + '/auth/login', credentials)
     .then(saveToken)
     .then(res => res.data)
-    .catch(e => {
-      console.log(e);
-    });
 }
 
 function registerUser(credentials) {
   return axios
     .post(apiUrl + '/users/register', credentials)
     .then(res => res.data)
-    .catch(e => {
-      console.log(e.response);
-    });
 }
 
 function logoutUser() {

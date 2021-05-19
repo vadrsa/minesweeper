@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [error, setError] = React.useState('');
 
   return (
     <Page
@@ -67,7 +68,11 @@ const RegisterView = () => {
               values.username = values.email? values.email: values.username;
               return api.registerUser(values).then(data => {
                   navigate('/login', { replace: true });
-              })
+              }).catch(e => {
+				if(e.response.status === 409) {
+					setError('Username or Email already registerd!')
+				}
+			  });
               
             }}
           >
@@ -99,9 +104,9 @@ const RegisterView = () => {
                 <Grid container spacing={3}>
                   <Grid item xs={6}>
                     <TextField
-                      error={Boolean(touched.email && errors.email)}
+                      error={Boolean(touched.email && errors.email || error)}
                       fullWidth
-                      helperText={touched.email && errors.email}
+                      helperText={touched.email && errors.email || error}
                       label="Email Address"
                       margin="normal"
                       name="email"
