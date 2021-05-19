@@ -80,11 +80,11 @@ function gameClick(row, col) {
 
 function gameFlag(row, col) {
   return axios
-  .patch(apiUrl + '/game/flag', { row, col })
-  .then(res => res.data)
-  .catch(e => {
-    console.log(e.response);
-  })
+    .patch(apiUrl + '/game/flag', { row, col })
+    .then(res => res.data)
+    .catch(e => {
+      console.log(e.response);
+    });
 }
 
 function getTopUsers(difficulty) {
@@ -93,8 +93,12 @@ function getTopUsers(difficulty) {
     .then(res => res.data);
 }
 
-function getGameState(){
+function getGameState() {
   return axios.get(`${apiUrl}/game`).then(res => res.data);
+}
+
+function quitGame() {
+	return axios.patch(`${apiUrl}/game/quit`)
 }
 
 export default {
@@ -108,4 +112,5 @@ export default {
   gameClick,
   getGameState,
   gameFlag,
+  quitGame
 };

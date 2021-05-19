@@ -78,8 +78,8 @@ const Game = () => {
         }).catch(e => console.log(e.response));
     }, [])
 
-    function handleRightClick(e, i, j) {
-        e.preventDefault();
+  function handleRightClick(e, i, j) {
+    e.preventDefault();
 
         api.gameFlag(i, j).then(data => {
             setState(data);
