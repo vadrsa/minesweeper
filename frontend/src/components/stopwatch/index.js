@@ -1,18 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import StopwatchDisplay from './StopwatchDisplay.jsx';
-import StopwatchHistory from './StopwatchHistory.jsx';
+import StopwatchDisplay from './StopwatchDisplay.js';
 
 class Stopwatch extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       running: false,
       currentTimeMs: 0,
       currentTimeSec: 0,
       currentTimeMin: 0,
     };
+    this.start();
   }
 
   formatTime = (val, ...rest) => {
@@ -39,15 +38,13 @@ class Stopwatch extends React.Component {
   };
 
   pace = () => {
-    this.setState({ currentTimeMs: this.state.currentTimeMs + 10 });
-    if (this.state.currentTimeMs >= 1000) {
-      this.setState({ currentTimeSec: this.state.currentTimeSec + 1 });
-      this.setState({ currentTimeMs: 0 });
-    }
-    if (this.state.currentTimeSec >= 60) {
-      this.setState({ currentTimeMin: this.state.currentTimeMin + 1 });
-      this.setState({ currentTimeSec: 0 });
-    }
+    const timePassed = this.props.end > this.props.start? this.props.end - this.props.start: Date.now() - this.props.start;
+    const currentTimeMin = Math.floor(timePassed/60000);
+    const currentTimeSec = Math.floor((timePassed%60000)/1000);
+    const currentTimeMs = Math.floor((timePassed%60000)%1000);
+    this.setState({ currentTimeMs: currentTimeMs });
+    this.setState({ currentTimeSec: currentTimeSec });
+    this.setState({ currentTimeMin: currentTimeMin });
   };
 
   reset = () => {
@@ -61,20 +58,11 @@ class Stopwatch extends React.Component {
   render() {
     return (
       <div className={'stopwatch'}>
-        <h2 ref="header">Stopwatch</h2>
-        {this.state.running === false && (
-          <button onClick={this.start}>START</button>
-        )}
-        {this.state.running === true && (
-          <button onClick={this.stop}>STOP</button>
-        )}
-        <button onClick={this.reset}>RESET</button>
         <StopwatchDisplay
           ref="display"
           {...this.state}
           formatTime={this.formatTime}
         />
-        <StopwatchHistory {...this.state} formatTime={this.formatTime} />
       </div>
     );
   }

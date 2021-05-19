@@ -31,7 +31,7 @@ router.patch('/flag', asyncHandler(async (req, res) => {
 
 router.get('/', asyncHandler(async (req, res) => {
 	const user = await users.findOne(req.user.userId);
-	const result = game.getGame(req.user);
+	const result = game.getGame(user);
 	res.status(201).json(result);
 }))
 
