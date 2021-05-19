@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Cell = ({ value, onClick, ...rest }) => {
+const Cell = ({ value, onClick, onContextMenu, ...rest }) => {
     const classes = useStyles();
     function getValue() {
         if (value === -2) {
@@ -53,6 +53,7 @@ const Cell = ({ value, onClick, ...rest }) => {
     return (
         <div
             onClick={onClick}
+			onContextMenu={onContextMenu}
             className={className}
         >
             {getValue()}
@@ -62,7 +63,8 @@ const Cell = ({ value, onClick, ...rest }) => {
 
 Cell.propTypes = {
     value: PropTypes.number,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+	onContextMenu: PropTypes.func,
 };
 
 export default Cell;

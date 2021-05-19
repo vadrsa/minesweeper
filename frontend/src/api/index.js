@@ -78,6 +78,15 @@ function gameClick(row, col) {
     });
 }
 
+function gameFlag(row, col) {
+  return axios
+  .patch(apiUrl + '/game/flag', { row, col })
+  .then(res => res.data)
+  .catch(e => {
+    console.log(e.response);
+  })
+}
+
 function getTopUsers(difficulty) {
   return axios
     .get(`${apiUrl}/users/top?difficulty=${difficulty}`)
@@ -97,5 +106,6 @@ export default {
   getTopUsers,
   gameStart,
   gameClick,
-  getGameState
+  getGameState,
+  gameFlag,
 };

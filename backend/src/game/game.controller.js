@@ -19,13 +19,20 @@ router.post('/newGame', asyncHandler(async (req, res) => {
 
 router.patch('/click', asyncHandler(async (req, res) => {
 	const user = await users.findOne(req.user.userId);
-	const newBoard = game.click(req.body.row, req.body.col, user);
-	res.json(newBoard);
+	const result = game.click(req.body.row, req.body.col, user);
+	res.json(result);
+}))
+
+router.patch('/flag', asyncHandler(async (req, res) => {
+	const user = await users.findOne(req.user.userId);
+	const result = game.flag(req.body.row, req.body.col, user);
+	res.json(result);
 }))
 
 router.get('/', asyncHandler(async (req, res) => {
 	const user = await users.findOne(req.user.userId);
-	res.status(201).send(user.currentGame);
+	const result = game.getGame(user);
+	res.status(201).json(result);
 }))
 
 module.exports = router;
