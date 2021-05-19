@@ -108,6 +108,7 @@ class GameService {
       isLost = true;
       user.currentGame[0].endDate = Date.now();
     }
+
     if(num == 0) {
       newUserBoard = checkSurroundings(row, col, newUserBoard, gameBoard, n, m)
     }
@@ -118,7 +119,17 @@ class GameService {
     }
 
     user.currentGame[0].userArr = newUserBoard;
-    if(isWon) user.currentGame[0].endDate = Date.now();
+    if(isWon) {
+      user.currentGame[0].endDate = Date.now();
+      const gameTime = Math.floor((user.currentGame[0].endDate - user.currentGame[0].startDate) / 1000);
+      if(user.currentGame[0].difficulty === util.MODES.easy) {
+        if(gameTime < user.easyTime || user.easyTime === 0) user.easyTime = gameTime;
+      } else if(user.currentGame[0].difficulty === util.MODES.medium) {
+        if(gameTime < user.mediumTime || user.mediumTime === 0) user.mediumTime = gameTime;
+      } else {
+        if(gameTime < user.hardTime || user.hardTime === 0) user.hardTime = gameTime;
+      }
+    }
 
     user.save();
 
