@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     isFlag: {
+        background: "#333333",
         color: "#fc543c"
     },
     isMine: {
