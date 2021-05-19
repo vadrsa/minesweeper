@@ -67,16 +67,18 @@ class GameService {
     return [gameBoard, userBoard];
   }
 
-  saveGame(boards, user) {
+  saveGame(boards, user, difficulty) {
     user.currentGame = {
       gameArr: boards[0],
       userArr: boards[1],
+	  difficulty
     };
 
     return user.save();
   }
 
   getGame(user) {
+    if(typeof user.currentGame[0] === 'undefined') return {userArr: []};
     const gameData = JSON.parse(JSON.stringify(user.currentGame[0]));
 
     delete gameData.gameArr;
@@ -89,6 +91,7 @@ class GameService {
     const userBoard = user.currentGame[0].userArr;
 
     if(user.currentGame[0].isLost) return {userArr: userBoard};
+    if(userBoard[row][col] === -3) return {userArr: userBoard};
     
     let newUserBoard = JSON.parse(JSON.stringify(userBoard));
     let isLost = false;
@@ -126,8 +129,8 @@ class GameService {
   }
 
   flag(row, col, user) {
-    const gameBoard = user.currentGame[0].gameArr;
     const userBoard = user.currentGame[0].userArr;
+    if(user.currentGame[0].endDate > user.currentGame[0].startDate) return userBoard;
 
     let newUserBoard = JSON.parse(JSON.stringify(userBoard));
 
@@ -138,6 +141,11 @@ class GameService {
     user.save();
 
     return newUserBoard;
+  }
+
+  quit(user) {
+    user.currentGame = undefined;
+    return user.save();
   }
 }
 
@@ -154,7 +162,7 @@ function revealBombs(userBoard, gameBoard, n, m) {
 function checkSurroundings(row, col, userBoard, gameBoard, n, m) {
   for(let i = row - 1; i <= row + 1; i++) {
     for(let j = col - 1; j <= col + 1; j++) {
-      if(i < 0 || j < 0 || i >= n || j >= m || userBoard[i][j] != -2) continue;
+      if(i < 0 || j < 0 || i >= n || j >= m || userBoard[i][j] > -2) continue;
 
       userBoard[i][j] = gameBoard[i][j];
 
