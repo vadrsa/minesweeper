@@ -8,7 +8,6 @@ import {
     DialogTitle,
     Grid,
     makeStyles,
-    Modal,
     Typography
 } from '@material-ui/core';
 import Page from 'src/components/Page';

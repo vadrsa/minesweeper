@@ -3,7 +3,6 @@ import cachios from 'cachios';
 import Cookies from 'universal-cookie';
 const apiUrl = 'http://localhost:3030';
 const cookies = new Cookies();
-console.log(apiUrl);
 
 function saveToken(res) {
   cookies.set('token', res.data.token, { path: '/' });
@@ -42,7 +41,6 @@ function registerUser(credentials) {
 function logoutUser() {
   const cookies = new Cookies();
   cookies.remove('token', { path: '/' });
-  console.log('123');
 }
 
 function isLoggedIn() {

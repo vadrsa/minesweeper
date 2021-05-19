@@ -2,7 +2,6 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
-import AccountView from 'src/views/account/AccountView';
 import GameView from 'src/views/game/GameView';
 import LeaderboardView from 'src/views/leaderboard/LeaderboardView';
 import DashboardView from 'src/views/reports/DashboardView';

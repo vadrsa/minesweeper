@@ -44,7 +44,7 @@ const Cell = ({ value, onClick, onContextMenu, ...rest }) => {
         if (value === -1) {
             return "💣";
         }
-        if(value === 0){
+        if (value === 0) {
             return "";
         }
         return value;
@@ -57,7 +57,7 @@ const Cell = ({ value, onClick, onContextMenu, ...rest }) => {
     return (
         <div
             onClick={onClick}
-			onContextMenu={onContextMenu}
+            onContextMenu={onContextMenu}
             className={className}
         >
             {getValue()}
@@ -68,7 +68,7 @@ const Cell = ({ value, onClick, onContextMenu, ...rest }) => {
 Cell.propTypes = {
     value: PropTypes.number,
     onClick: PropTypes.func,
-	onContextMenu: PropTypes.func,
+    onContextMenu: PropTypes.func,
 };
 
 export default Cell;

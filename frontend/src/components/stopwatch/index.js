@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import StopwatchDisplay from './StopwatchDisplay.js';
 
 class Stopwatch extends React.Component {
@@ -38,10 +37,10 @@ class Stopwatch extends React.Component {
   };
 
   pace = () => {
-    const timePassed = this.props.end > this.props.start? this.props.end - this.props.start: Date.now() - this.props.start;
-    const currentTimeMin = Math.floor(timePassed/60000);
-    const currentTimeSec = Math.floor((timePassed%60000)/1000);
-    const currentTimeMs = Math.floor((timePassed%60000)%1000);
+    const timePassed = this.props.end > this.props.start ? this.props.end - this.props.start : Date.now() - this.props.start;
+    const currentTimeMin = Math.floor(timePassed / 60000);
+    const currentTimeSec = Math.floor((timePassed % 60000) / 1000);
+    const currentTimeMs = Math.floor((timePassed % 60000) % 1000);
     this.setState({ currentTimeMs: currentTimeMs });
     this.setState({ currentTimeSec: currentTimeSec });
     this.setState({ currentTimeMin: currentTimeMin });

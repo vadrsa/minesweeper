@@ -96,7 +96,7 @@ const RegisterView = () => {
                     Use your email or a username to create new account
                   </Typography>
                 </Box>
-                <Grid container spacing="3">
+                <Grid container spacing={3}>
                   <Grid item xs={6}>
                     <TextField
                       error={Boolean(touched.email && errors.email)}
